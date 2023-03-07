@@ -11,6 +11,14 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": true
+        },
+        {
+            "name": "Python: test",
+            "type": "python",
+            "request": "launch",
+            "program": "tests/test_python.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
         }
     ]
 }
