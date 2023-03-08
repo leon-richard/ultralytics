@@ -1,12 +1,20 @@
-
+# 输入项包括：图片文件路径、手工标注的label文件路径
 image-files-path: ../../datasets/motofire
+manual-label-files-path: ../../datasets/motofire
 
-# mapping-cfg.yaml文件，把最后两个类，替换为fire 和 smoke。
-from-labels-path: from-labels
-to-labels-path: to-labels
+# 中间项：通过yolov8x生成的label文件路径
+yolov8x-label-files-path: yolov8x-labels
+
+# 输出项：最终合成手工标注和yolov8x标注的label文件路径（包括images）
+merged-dataset-path: ../../datasets/merged-fire-smoke
 
 # Classes
-from-names:
+manual-label-names:
+  0: fire
+  1: smoke
+
+# Classes
+yolov8-label-names:
   0: person
   1: bicycle
   2: car
@@ -89,7 +97,7 @@ from-names:
   79: toothbrush
 
 # Classes
-to-names:
+merged-label-names:
   0: person
   1: bicycle
   2: car

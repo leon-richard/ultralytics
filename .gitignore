@@ -138,6 +138,7 @@ runs/
 wandb/
 labels-mapping/from-labels
 labels-mapping/to-labels
+labels-mapping/yolov8x-labels
 
 .DS_Store
 
