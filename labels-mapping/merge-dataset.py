@@ -69,6 +69,8 @@ print(yolov8_label_mapping)
 
 model = YOLO("yolov8x.pt")
 
+class_id_record = np.zeros(shape=(0))
+
 # 步骤：
 for image_file_path in IMAGE_FILES_PATH.rglob("*.jpg"):
     if image_file_path.is_file():
@@ -111,6 +113,9 @@ for image_file_path in IMAGE_FILES_PATH.rglob("*.jpg"):
         # 3. 按照文件名，把上述两类标签合并，并且把image文件也整理到输出目录。
         ###############################################################
         merged_numpy_boxes = np.concatenate((yolov8_numpy_boxes, manual_numpy_boxes), axis=0)
+
+        class_id_record = np.hstack((class_id_record, merged_numpy_boxes[:, 0]))
+
         merged_label_file_path = str(MERGED_LABELS_PATH / image_file_path.stem) + '.txt'
         with open(merged_label_file_path, mode='w') as f:
             np.savetxt(f, merged_numpy_boxes, fmt='%g')
@@ -126,3 +131,7 @@ for image_file_path in IMAGE_FILES_PATH.rglob("*.jpg"):
 with open(MERGED_DATASET_PATH / "labels.txt", 'w') as f:
     for key, val in MERGE_CFG_DICT['merged-label-names'].items():
         f.write(val + '\n')
+
+unique, counts = np.unique(class_id_record, return_counts=True)
+for i in unique.astype(int):
+    print(f"class-{i}:\t{counts[i]}\t{MERGE_CFG_DICT['merged-label-names'][i]}")
