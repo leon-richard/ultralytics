@@ -98,9 +98,9 @@ yolov8-label-names:
 
 # Classes
 merged-label-names:
-  0: person
-  1: bicycle
-  2: car
-  3: motorcycle
-  4: fire
-  5: smoke
+  0: fire
+  1: smoke
+  2: person
+  3: bicycle
+  4: car
+  5: motorcycle

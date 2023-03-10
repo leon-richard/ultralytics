@@ -72,6 +72,7 @@ model = YOLO("yolov8x.pt")
 class_id_record = np.zeros(shape=(0))
 
 # 步骤：
+save_fire_id = 0
 for image_file_path in IMAGE_FILES_PATH.rglob("*.jpg"):
     if image_file_path.is_file():
         ###############################################################
@@ -116,12 +117,15 @@ for image_file_path in IMAGE_FILES_PATH.rglob("*.jpg"):
 
         class_id_record = np.hstack((class_id_record, merged_numpy_boxes[:, 0]))
 
-        merged_label_file_path = str(MERGED_LABELS_PATH / image_file_path.stem) + '.txt'
+        save_file_name = f"merged-file-%08d" % save_fire_id
+        save_fire_id += 1
+
+        merged_label_file_path = str(MERGED_LABELS_PATH / save_file_name) + '.txt'
         with open(merged_label_file_path, mode='w') as f:
             np.savetxt(f, merged_numpy_boxes, fmt='%g')
 
         src_path = image_file_path
-        dst_path = MERGED_IMAGES_PATH / image_file_path.name
+        dst_path = str(MERGED_IMAGES_PATH / save_file_name) + image_file_path.suffix
 
         with open(src_path, 'rb') as src_file:
             with open(dst_path, 'wb') as dst_file:
